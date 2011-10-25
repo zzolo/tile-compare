@@ -4,3 +4,20 @@
 .map-panel {
   float: right;
 }
+
+a, a:visited, a:hover {
+  color: #15428B;
+}
+
+/**
+ * Map controls
+ */
+#geo-ext-container .olControlAttribution {
+  right: inherit;
+  bottom: 2px;
+  left: 2px;
+  color: #DDDDDD;
+}
+#geo-ext-container .olControlAttribution .olBingAttribution {
+  color: #DDDDDD;
+}
