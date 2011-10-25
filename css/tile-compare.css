@@ -2,7 +2,7 @@
  * Main CSS for Tile Compare.
  */
 .map-panel {
-  float: right;
+  float: left;
 }
 
 a, a:visited, a:hover {

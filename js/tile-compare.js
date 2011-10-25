@@ -27,7 +27,8 @@
         'title': 'Bing',
         'layers': [ 
           new OpenLayers.Layer.Bing({ name: 'Bing Streets', key: bingKey, type: 'Road' }), 
-          new OpenLayers.Layer.Bing({ name: 'Bing Aerial', key: bingKey, type: 'Aerial' }) ]
+          new OpenLayers.Layer.Bing({ name: 'Bing Aerial', key: bingKey, type: 'Aerial' }) ],
+        'zoom_offset': -1
       },
       'yahoo': {
         'title': 'Yahoo',
@@ -48,13 +49,17 @@
         // Define controls
         var controls = [
           new OpenLayers.Control.LayerSwitcher({'ascending':false}),
-          //new OpenLayers.Control.Permalink('permalink'),
           new OpenLayers.Control.KeyboardDefaults(),
-          new OpenLayers.Control.Attribution()
+          new OpenLayers.Control.Attribution(),
+          new OpenLayers.Control.Navigation()
         ];
         
         // Create new map and controls
-        maps[i].map = new OpenLayers.Map('', { controls: controls });
+        maps[i].map = new OpenLayers.Map('', {
+          controls: controls,
+          tile_compare_map: i,
+          zoom_offset: (maps[i].zoom_offset) ? maps[i].zoom_offset : 0
+        });
         
         // Add layers
         maps[i].map.addLayers(maps[i].layers);
@@ -69,10 +74,31 @@
         });
         
         // Set center and zoom
-        maps[i].map.setCenter(new OpenLayers.LonLat(100,10), 4);
+        maps[i].map.setCenter(new OpenLayers.LonLat(100, 10), 4);
         
-        //maps[i].events.on('moveend', function(e) { console.log(e); });
-        //maps[i].events.on('zoomend', function(e) { console.log(e); });
+        // For the first map, lets add some helpful controls
+        if (count == 1) {
+          maps[i].map.addControl(new OpenLayers.Control.Permalink('permalink'));
+          maps[i].map.addControl(new OpenLayers.Control.PanZoom());
+        }
+        
+        // Generic event handler to mirror movement on all maps.
+        var eventSharer = function(event) {
+          var thisMap = event.object;
+          for (var j in maps) {
+            // Ensure there is a map and its not the current map
+            if (maps.hasOwnProperty(j) && typeof maps[j].map != 'undefined' && j != thisMap.tile_compare_map) {
+              maps[j].map.setCenter(thisMap.center, thisMap.zoom + maps[j].map.zoom_offset);
+            }
+          }
+        };
+        
+        // Define event listeners
+        if (i == 'google') {
+          maps[i].map.events.register('movestart', {}, eventSharer);
+          maps[i].map.events.register('move', {}, eventSharer);
+          maps[i].map.events.register('moveend', {}, eventSharer);
+        }
       }
     }
   });
