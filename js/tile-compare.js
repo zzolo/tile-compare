@@ -32,7 +32,10 @@
       },
       'yahoo': {
         'title': 'Yahoo',
-        'layers': [ new OpenLayers.Layer.Yahoo('Yahoo Streets') ]
+        'layers': [ new OpenLayers.Layer.Yahoo('Yahoo Streets', {
+          'sphericalMercator': true,
+          'maxExtent': new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+        }) ]
       },
       'osm': {
         'title': 'OSM',
@@ -57,6 +60,7 @@
         // Create new map and controls
         maps[i].map = new OpenLayers.Map('', {
           controls: controls,
+          projection: new OpenLayers.Projection('EPSG:900913'),
           tile_compare_map: i,
           zoom_offset: (maps[i].zoom_offset) ? maps[i].zoom_offset : 0
         });
@@ -93,7 +97,7 @@
           }
         };
         
-        // Define event listeners
+        // Define event listeners (for google for now)
         if (i == 'google') {
           maps[i].map.events.register('movestart', {}, eventSharer);
           maps[i].map.events.register('move', {}, eventSharer);
