@@ -82,9 +82,10 @@
         
         // For the first map, lets add some helpful controls
         if (count == 1) {
-          maps[i].map.addControl(new OpenLayers.Control.Permalink('permalink'));
           maps[i].map.addControl(new OpenLayers.Control.PanZoom());
         }
+        // Add permalink now, so that it overrides center
+        maps[i].map.addControl(new OpenLayers.Control.Permalink('permalink'));
         
         // Generic event handler to mirror movement on all maps.
         var moveSharer = function(event) {
@@ -97,59 +98,51 @@
           }
         };
         
-        // Hack so that the move event doesn't spawn infinite ones.  We keep track
-        // of original mover in maps object.
-        var moveHack = function(event) {
-          var thisMap = event.object;
-          var movingMap = false;
-          
-          // Check if any maps are moving.
-          for (var m in maps) {
-            if (maps.hasOwnProperty(j) && typeof maps[m].map != 'undefined') {
-              if (typeof maps[m].isMoving != 'undefined' && maps[m].isMoving == true) {
-                movingMap = m;
-              }
-            }
-          }
-          
-          console.log(event.type);
-          console.log(thisMap.tile_compare_map);
-          console.log(movingMap);
-          
-          
-          // For starting, if no moving maps, then this map is the primary map,
-          // otherwise, un-register other move events.
-          if (event.type == 'movestart') {
-            if (!movingMap) {
-              maps[thisMap.tile_compare_map].etf = 'etf';
-              maps[thisMap.tile_compare_map].isMoving = 'true';
-              maps[thisMap.tile_compare_map].map.events.on({ 'move': moveSharer });
-console.log(maps[thisMap.tile_compare_map]);
-            }
-            else {
-              for (var j in maps) {
-                if (maps.hasOwnProperty(j) && typeof maps[j].map != 'undefined' && j != thisMap.tile_compare_map) {
-                  maps[j].map.events.un({ 'move': moveSharer });
-                }
-              }
-            }
-          }
-          
-          // For ending, un-register all events
-          if (event.type == 'moveend') {
-            for (var j in maps) {
-              if (maps.hasOwnProperty(j) && typeof maps[j].map != 'undefined') {
-                maps[j].map.events.un({ 'move': moveSharer });
-                maps[j].isMoving = false;
-              }
-            }
-          }
-        };
+        // Define event listeners.  Only define for first one, as hacking
+        // around the move event handling is very difficult.
+        if (count == 1) {
+          maps[i].map.events.on({ 'movestart': moveSharer });
+          maps[i].map.events.on({ 'move': moveSharer });
+          maps[i].map.events.on({ 'moveend': moveSharer });
         
-        // Define event listeners
-        maps[i].map.events.on({ 'movestart': moveHack });
-        maps[i].map.events.on({ 'moveend': moveHack });
+          // Geo locate user.  But first check if we have a permalink
+          var argParser = new OpenLayers.Control.ArgParser();
+          var args = argParser.getParameters();
+          if (!args.lat && !args.lon) {
+            var geolocate = new OpenLayers.Control.Geolocate({
+              'bind': true,
+              'geolocationOptions': {
+                'enableHighAccuracy': true,
+                'maximumAge': 0,
+                'timeout': 4000
+              }
+            });
+            maps[i].map.addControl(geolocate);
+            
+            // Add some event handling
+            geolocate.events.on({ 'locationupdated': 
+              function(e) {
+                maps[i].map.moveTo(new OpenLayers.LonLat(e.point.x, e.point.y));
+                
+                // Hack for yahoo layers
+                maps.yahoo.map.layers[0].redraw();
+              }
+            });
+            geolocate.events.on({ 'locationfailed':
+              function(e) {
+                OpenLayers.Console.log('Location detection failed');
+              }
+            });
+            
+            // Activiate!
+            geolocate.activate();
+          }
+        }
       }
     }
   });
 })(jQuery);
+
+/**
+ * Helper function get query string values (Didn't see one in Ext)
+ */
