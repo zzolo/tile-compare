@@ -87,22 +87,68 @@
         }
         
         // Generic event handler to mirror movement on all maps.
-        var eventSharer = function(event) {
+        var moveSharer = function(event) {
           var thisMap = event.object;
           for (var j in maps) {
             // Ensure there is a map and its not the current map
             if (maps.hasOwnProperty(j) && typeof maps[j].map != 'undefined' && j != thisMap.tile_compare_map) {
-              maps[j].map.setCenter(thisMap.center, thisMap.zoom + maps[j].map.zoom_offset);
+              maps[j].map.moveTo(thisMap.center, thisMap.zoom + maps[j].map.zoom_offset, { dragging: false });
             }
           }
         };
         
-        // Define event listeners (for google for now)
-        if (i == 'google') {
-          maps[i].map.events.register('movestart', {}, eventSharer);
-          maps[i].map.events.register('move', {}, eventSharer);
-          maps[i].map.events.register('moveend', {}, eventSharer);
-        }
+        // Hack so that the move event doesn't spawn infinite ones.  We keep track
+        // of original mover in maps object.
+        var moveHack = function(event) {
+          var thisMap = event.object;
+          var movingMap = false;
+          
+          // Check if any maps are moving.
+          for (var m in maps) {
+            if (maps.hasOwnProperty(j) && typeof maps[m].map != 'undefined') {
+              if (typeof maps[m].isMoving != 'undefined' && maps[m].isMoving == true) {
+                movingMap = m;
+              }
+            }
+          }
+          
+          console.log(event.type);
+          console.log(thisMap.tile_compare_map);
+          console.log(movingMap);
+          
+          
+          // For starting, if no moving maps, then this map is the primary map,
+          // otherwise, un-register other move events.
+          if (event.type == 'movestart') {
+            if (!movingMap) {
+              maps[thisMap.tile_compare_map].etf = 'etf';
+              maps[thisMap.tile_compare_map].isMoving = 'true';
+              maps[thisMap.tile_compare_map].map.events.on({ 'move': moveSharer });
+console.log(maps[thisMap.tile_compare_map]);
+            }
+            else {
+              for (var j in maps) {
+                if (maps.hasOwnProperty(j) && typeof maps[j].map != 'undefined' && j != thisMap.tile_compare_map) {
+                  maps[j].map.events.un({ 'move': moveSharer });
+                }
+              }
+            }
+          }
+          
+          // For ending, un-register all events
+          if (event.type == 'moveend') {
+            for (var j in maps) {
+              if (maps.hasOwnProperty(j) && typeof maps[j].map != 'undefined') {
+                maps[j].map.events.un({ 'move': moveSharer });
+                maps[j].isMoving = false;
+              }
+            }
+          }
+        };
+        
+        // Define event listeners
+        maps[i].map.events.on({ 'movestart': moveHack });
+        maps[i].map.events.on({ 'moveend': moveHack });
       }
     }
   });
