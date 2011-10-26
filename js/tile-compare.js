@@ -21,21 +21,41 @@
     maps = {
       'google': {
         'title': 'Google',
-        'layers': [ new OpenLayers.Layer.Google('Google Streets') ]
+        'layers': [ 
+          new OpenLayers.Layer.Google('Google Streets', 
+            { tile_compare_type: 'streets', numZoomLevels: 20 }),
+          new OpenLayers.Layer.Google('Google Satellite', 
+            { tile_compare_type: 'satellite', type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22 }),
+          new OpenLayers.Layer.Google('Google Physical', 
+            { tile_compare_type: 'satellite', type: google.maps.MapTypeId.TERRAIN, numZoomLevels: 20 })
+        ]
       },
       'bing': {
         'title': 'Bing',
         'layers': [ 
-          new OpenLayers.Layer.Bing({ name: 'Bing Streets', key: bingKey, type: 'Road', wrapDateLine: true }), 
-          new OpenLayers.Layer.Bing({ name: 'Bing Aerial', key: bingKey, type: 'Aerial', wrapDateLine: true }) ],
+          new OpenLayers.Layer.Bing(
+            { name: 'Bing Streets', key: bingKey, tile_compare_type: 'streets', type: 'Road', wrapDateLine: true }), 
+          new OpenLayers.Layer.Bing(
+            { name: 'Bing Aerial', key: bingKey, tile_compare_type: 'satellite', type: 'Aerial', wrapDateLine: true })
+        ],
         'zoom_offset': -1
       },
       'yahoo': {
         'title': 'Yahoo',
-        'layers': [ new OpenLayers.Layer.Yahoo('Yahoo Streets', {
-          'sphericalMercator': true,
-          'maxExtent': new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-        }) ]
+        'layers': [ 
+          new OpenLayers.Layer.Yahoo('Yahoo Streets', {
+            sphericalMercator: true,
+            maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+            type: YAHOO_MAP_REG,
+            tile_compare_type: 'streets'
+          }),
+          new OpenLayers.Layer.Yahoo('Yahoo Satellite', {
+            sphericalMercator: true,
+            maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+            type: YAHOO_MAP_SAT,
+            tile_compare_type: 'satellite'
+          })
+        ]
       },
       'osm': {
         'title': 'OSM',
