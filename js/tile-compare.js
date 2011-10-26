@@ -26,8 +26,8 @@
       'bing': {
         'title': 'Bing',
         'layers': [ 
-          new OpenLayers.Layer.Bing({ name: 'Bing Streets', key: bingKey, type: 'Road' }), 
-          new OpenLayers.Layer.Bing({ name: 'Bing Aerial', key: bingKey, type: 'Aerial' }) ],
+          new OpenLayers.Layer.Bing({ name: 'Bing Streets', key: bingKey, type: 'Road', wrapDateLine: true }), 
+          new OpenLayers.Layer.Bing({ name: 'Bing Aerial', key: bingKey, type: 'Aerial', wrapDateLine: true }) ],
         'zoom_offset': -1
       },
       'yahoo': {

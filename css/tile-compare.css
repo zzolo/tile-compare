@@ -9,6 +9,15 @@ a, a:visited, a:hover {
   color: #15428B;
 }
 
+h1 {
+  padding: 1em;
+}
+
+header {
+  background-color: #333333;
+  color: #EEEEEE;
+}
+
 /**
  * Map controls
  */
