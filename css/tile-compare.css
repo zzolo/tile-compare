@@ -22,6 +22,13 @@ header {
   float: right;
   margin-top: .5em;
   margin-right: .5em;
+  display: block;
+  min-width: 30px;
+}
+
+a#about-button {
+  padding: 4px;
+  color: #FFFFFF;
 }
 
 /**

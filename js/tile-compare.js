@@ -193,7 +193,3 @@
     });
   });
 })(jQuery);
-
-/**
- * Helper function get query string values (Didn't see one in Ext)
- */
