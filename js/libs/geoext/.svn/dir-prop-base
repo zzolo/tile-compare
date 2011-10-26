@@ -1,0 +1,7 @@
+K 13
+svn:externals
+V 101
+openlayers http://svn.openlayers.org/trunk/openlayers
+ext http://www.geoext.org/svn/geoext/ext/3.4.0
+
+END

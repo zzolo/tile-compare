@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/2861/core/trunk/geoext/tests/lib/GeoExt/widgets
+END
+Action.html
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/2601/core/trunk/geoext/tests/lib/GeoExt/widgets/Action.html
+END
+LegendPanel.html
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/2360/core/trunk/geoext/tests/lib/GeoExt/widgets/LegendPanel.html
+END
+UrlLegend.html
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/2860/core/trunk/geoext/tests/lib/GeoExt/widgets/UrlLegend.html
+END
+VectorLegend.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/2848/core/trunk/geoext/tests/lib/GeoExt/widgets/VectorLegend.html
+END
+FeatureRenderer.html
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/2397/core/trunk/geoext/tests/lib/GeoExt/widgets/FeatureRenderer.html
+END
+WMSLegend.html
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/2861/core/trunk/geoext/tests/lib/GeoExt/widgets/WMSLegend.html
+END
+ZoomSlider.html
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/1078/core/trunk/geoext/tests/lib/GeoExt/widgets/ZoomSlider.html
+END
+LayerLegend.html
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/2860/core/trunk/geoext/tests/lib/GeoExt/widgets/LayerLegend.html
+END
+MapPanel.html
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/2657/core/trunk/geoext/tests/lib/GeoExt/widgets/MapPanel.html
+END
+LegendImage.html
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/1889/core/trunk/geoext/tests/lib/GeoExt/widgets/LegendImage.html
+END
+Popup.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/2850/core/trunk/geoext/tests/lib/GeoExt/widgets/Popup.html
+END
+form.html
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/2852/core/trunk/geoext/tests/lib/GeoExt/widgets/form.html
+END
+LayerOpacitySlider.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/2475/core/trunk/geoext/tests/lib/GeoExt/widgets/LayerOpacitySlider.html
+END
+PrintMapPanel.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/2470/core/trunk/geoext/tests/lib/GeoExt/widgets/PrintMapPanel.html
+END
+form.js
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/!svn/ver/2847/core/trunk/geoext/tests/lib/GeoExt/widgets/form.js
+END
