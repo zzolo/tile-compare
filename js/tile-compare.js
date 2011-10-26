@@ -160,6 +160,37 @@
         }
       }
     }
+    
+    // Add some basic buttons for show street tiles and
+    // satelite tiles
+    var streetsButton = new Ext.Button({
+      renderTo: 'streets-button',
+      text: 'Streets',
+      handler: function() {
+        for (var j in maps) {
+          if (maps.hasOwnProperty(j) && typeof maps[j].map != 'undefined') {
+            var layers = maps[j].map.getLayersBy('tile_compare_type', 'streets');
+            if (layers.length > 0 && typeof layers[0] != 'undefined') {
+              maps[j].map.setBaseLayer(layers[0]);
+            } 
+          }
+        }
+      }
+    });
+    var satelliteButton = new Ext.Button({
+      renderTo: 'satellite-button',
+      text: 'Satellite',
+      handler: function() {
+        for (var j in maps) {
+          if (maps.hasOwnProperty(j) && typeof maps[j].map != 'undefined') {
+            var layers = maps[j].map.getLayersBy('tile_compare_type', 'satellite');
+            if (layers.length > 0 && typeof layers[0] != 'undefined') {
+              maps[j].map.setBaseLayer(layers[0]);
+            } 
+          }
+        }
+      }
+    });
   });
 })(jQuery);
 

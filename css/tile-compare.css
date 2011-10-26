@@ -14,8 +14,14 @@ h1 {
 }
 
 header {
-  background-color: #333333;
-  color: #EEEEEE;
+  background-color: #D8E6F6;
+  color: #333333;
+}
+
+.layer-button {
+  float: right;
+  margin-top: .5em;
+  margin-right: .5em;
 }
 
 /**
