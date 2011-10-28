@@ -146,6 +146,7 @@
                 
                 // Hack for yahoo layers
                 maps.yahoo.map.layers[0].redraw();
+                maps.google.map.layers[0].redraw();
               }
             });
             geolocate.events.on({ 'locationfailed':
