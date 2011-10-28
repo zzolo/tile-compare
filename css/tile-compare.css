@@ -43,3 +43,19 @@ a#about-button {
 #geo-ext-container .olControlAttribution .olBingAttribution {
   color: #DDDDDD;
 }
+#geo-ext-container .olControlPermalink {
+  bottom: 5px;
+  right: 5px;
+}
+#geo-ext-container .olControlPermalink a {
+  background-color: #D8E6F6;
+  background-color: rgba(216, 230, 246, 0.7);
+  color: #333333;
+  border-radius: 3px;
+  padding: 5px;
+  text-decoration: none;
+  display: none;
+}
+#geo-ext-container #map1 .olControlPermalink a {
+  display: block;
+}
